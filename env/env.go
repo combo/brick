@@ -1,4 +1,4 @@
-package brick
+package env
 
 import (
 	"os"
@@ -7,7 +7,7 @@ import (
 type Environment struct {
 }
 
-func CreateEnvironment(dir string) (*Environment, error) {
+func Create(dir string) (*Environment, error) {
 	// Create the directory if it doesn't exist
 	err := os.Mkdir(dir, os.ModePerm)
 	if err != nil {

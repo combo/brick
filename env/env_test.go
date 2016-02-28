@@ -1,4 +1,4 @@
-package brick
+package env
 
 import (
 	"io/ioutil"
@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestCreateEnvironment(t *testing.T) {
+func TestCreate(t *testing.T) {
 	// Get the name of a temporary directory we can use
 	tempDir, err := ioutil.TempDir("", "brick_test")
 	if err != nil {
@@ -15,8 +15,8 @@ func TestCreateEnvironment(t *testing.T) {
 	defer os.RemoveAll(tempDir)
 
 	// Create the virtual environment
-	_, err = CreateEnvironment(tempDir)
+	_, err = Create(tempDir)
 	if err != nil {
-		t.Fatalf("CreateEnvironment: %s\n", err)
+		t.Fatalf("Create: %s\n", err)
 	}
 }
