@@ -27,7 +27,7 @@ func OpenMetadata(dir string) (*Metadata, error) {
 	decoder := json.NewDecoder(f)
 	err = decoder.Decode(&m)
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
 
 	return &m, nil
@@ -42,6 +42,14 @@ func (m *Metadata) Save(dir string) error {
 	}
 	defer f.Close()
 
-	encoder := json.NewEncoder(f)
-	return encoder.Encode(m)
+	bytes, err := json.MarshalIndent(m, "", "    ")
+	if err != nil {
+		return err
+	}
+	_, err = f.Write(bytes)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
