@@ -1,19 +1,20 @@
 package pkg
 
 import (
-	"encoding/json"
 	"errors"
 	"os"
 	"path/filepath"
 	"regexp"
+
+	"github.com/BurntSushi/toml"
 )
 
-const METADATA_FILE = "brick.package.json"
+const METADATA_FILE = "brick.package.toml"
 
 var nameRegexp = regexp.MustCompile(`^[0-9a-z]+([-_\.][0-9a-z]+)*$`)
 
 type Metadata struct {
-	Name string `json:"name"`
+	Name string `toml:"name"`
 }
 
 func ValidateName(name string) bool {
@@ -24,16 +25,8 @@ func ValidateName(name string) bool {
 func OpenMetadata(dir string) (*Metadata, error) {
 	path := filepath.Join(dir, METADATA_FILE)
 
-	f, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
 	var m Metadata
-
-	decoder := json.NewDecoder(f)
-	err = decoder.Decode(&m)
+	_, err := toml.DecodeFile(path, &m)
 	if err != nil {
 		return nil, err
 	}
@@ -64,11 +57,9 @@ func (m *Metadata) Save(dir string) error {
 	}
 	defer f.Close()
 
-	bytes, err := json.MarshalIndent(m, "", "    ")
-	if err != nil {
-		return err
-	}
-	_, err = f.Write(bytes)
+	encoder := toml.NewEncoder(f)
+	err = encoder.Encode(m)
+
 	if err != nil {
 		return err
 	}
