@@ -9,7 +9,7 @@ import (
 const METADATA_FILE = "brick.package.json"
 
 type Metadata struct {
-	Name string
+	Name string `json:"name"`
 }
 
 // Read and return the metadata for the specified package directory
