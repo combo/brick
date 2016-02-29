@@ -10,7 +10,7 @@ Current technologies such as Docker and Nix are orthogonal solutions
 to create and distribute atomic, isolated and reproducible applications that are
 guaranteed to run anywhere (TM).
 
-But, in their current state, their are not the panacea we are looking for:
+But, in their current state, they are not the panacea we are looking for:
 
 * Docker leverages Linux namespacing to create isolated environments but requires complex wiring for any non-trivial application and its layering technology enables a lot of duplication and container bloat.
 
