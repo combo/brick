@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"errors"
+	"io"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -43,21 +44,14 @@ func (m *Metadata) Validate() error {
 	return nil
 }
 
-// Save the package metadata into the specified package directory
-func (m *Metadata) Save(dir string) error {
+// Write the package metadata into the specified io.Writer
+func (m *Metadata) Write(w io.Writer) error {
 	err := m.Validate()
 	if err != nil {
 		return err
 	}
 
-	path := filepath.Join(dir, METADATA_FILE)
-	f, err := os.Create(path)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	encoder := toml.NewEncoder(f)
+	encoder := toml.NewEncoder(w)
 	err = encoder.Encode(m)
 
 	if err != nil {
@@ -65,4 +59,16 @@ func (m *Metadata) Save(dir string) error {
 	}
 
 	return nil
+}
+
+// Save the package metadata into the specified package directory
+func (m *Metadata) Save(dir string) error {
+	path := filepath.Join(dir, METADATA_FILE)
+	f, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	return m.Write(f)
 }
