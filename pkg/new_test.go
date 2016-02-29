@@ -1,14 +1,12 @@
-package env
+package pkg
 
 import (
 	"io/ioutil"
 	"os"
 	"testing"
-
-	"github.com/combo/brick/pkg"
 )
 
-func TestCreate(t *testing.T) {
+func TestNew(t *testing.T) {
 	name := "foo"
 
 	// Get the name of a temporary directory we can use
@@ -18,14 +16,14 @@ func TestCreate(t *testing.T) {
 	}
 	defer os.RemoveAll(tempDir)
 
-	// Create the virtual environment
-	_, err = Create(tempDir, name)
+	// Create the package
+	err = New(tempDir, name)
 	if err != nil {
 		t.Fatalf("Create: %s\n", err)
 	}
 
 	// A valid metadata file should have been created
-	m, err := pkg.OpenMetadata(tempDir)
+	m, err := OpenMetadata(tempDir)
 	if err != nil {
 		t.Fatalf("OpenMetadata: %s\n", err)
 	}

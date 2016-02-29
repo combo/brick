@@ -1,31 +1,26 @@
-package env
+package pkg
 
 import (
 	"os"
-
-	"github.com/combo/brick/pkg"
 )
 
-type Environment struct {
-}
-
-func Create(dir string, name string) (*Environment, error) {
+func New(dir string, name string) error {
 	// Create the directory if it doesn't exist
 	err := os.Mkdir(dir, os.ModePerm)
 	if err != nil {
 		if !os.IsExist(err) {
-			return nil, err
+			return err
 		}
 	}
 
 	// Create a metadata file
-	m := pkg.Metadata{
+	m := Metadata{
 		Name: name,
 	}
 	err = m.Save(dir)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return &Environment{}, nil
+	return nil
 }
