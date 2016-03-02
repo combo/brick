@@ -51,7 +51,7 @@ func tarRecursively(tw *tar.Writer, root, baseDir string) error {
 	})
 }
 
-// Given a metadata file and tree, write the brick package to w
+// Given a package directory containing metadata and tree, write the brick package to w
 // Returns the new package metadata, and error, if any
 func Package(w io.Writer, baseDir string) (*Metadata, error) {
 	// Load the metadata file
