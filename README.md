@@ -31,7 +31,7 @@ The host system will be able to keep in cache multiple versions of the same pack
 
 We are still in the design phase, things are moving and changing very fast.
 
-Please refer to our [wiki](https://github.com/combo/brick/wiki) for the design documents.
+Please refer to our [docs](https://github.com/combo/brick/tree/master/docs) for the design documents.
 
 ## Contributing
 
